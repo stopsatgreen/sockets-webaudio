@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sockets &amp; Web Audio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  @media (min-width: 480px) {
+    body.on { background-color: #ff0; }
+    button { display: none; }
+  }
+  </style>
+</head>
+<body>
+  <button id="pushme">Push me</button>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io();
+  var btn = document.getElementById('pushme');
+  btn.addEventListener('click', function () {
+    console.log('OK');
+    socket.emit('btn-push', 'OK');
+  });
+  socket.on('btn-pushed', function () {
+    document.body.classList.toggle('on');
+  });
+</script>
+</body>
+</html>
