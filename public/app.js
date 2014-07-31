@@ -50,10 +50,16 @@ function getAudio(stream){
 function audioInputUpdate(){
     //Loop for new audio input
     var volume = Math.floor(meter.volume*1000);
-    var volumeAmount = document.getElementById('volume-amount');
-    volumeAmount.innerHTML = volume;
+    if (volume > 175) {
+      socket.emit('audio-update', volume);
+    }
     requestAnimFrame(audioInputUpdate);
 }
+
+socket.on('audio-new-value', function (volume) {
+  var volumeAmount = document.getElementById('volume-amount');
+  volumeAmount.innerHTML = volume;
+});
 
 function liquidUpdate(){
   //Loop for updating liquid in bottle

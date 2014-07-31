@@ -18,6 +18,10 @@ io.sockets.on('connection', function(socket){
     socket.broadcast.emit('btn-pushed');
   });
 
+  socket.on('audio-update', function (volume) {
+    socket.broadcast.emit('audio-new-value', volume);
+  });
+
   socket.on('stopped', function() {
     socket.broadcast.emit('btn-active');
   });
