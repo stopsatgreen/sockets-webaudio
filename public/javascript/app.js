@@ -3,7 +3,7 @@ var socket = io();
 // Configurable variables
 var initialQuantity = 85, // % filled of the bottle
     fps = 24,             // Smoothness of the draining animation
-    volUpRange = 250,     // Volume upper range
+    volUpRange = 300,     // Volume upper range
     volDnRange = 50;      // Volume lower range
 
 var quantity = initialQuantity;
@@ -29,7 +29,7 @@ function initAudio(){
 
 function webRTCCheck(){
     //Check if getUserMedia, requestAnimationFrame, and AudioContext are supported by browser
-    window.requestAnimFrame = ( function(){ return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame })();
+    window.requestAnimFrame = ( function(){ return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame; })();
     navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
 }
@@ -68,7 +68,7 @@ function drinking () {
       }
       quantity--;
     }, 1000 / fps);
-  })()
+  })();
 }
 
 socket.on('audio-new-value', function (volume) {

@@ -14,7 +14,7 @@ io.sockets.on('connection', function(socket){
   socket.broadcast.emit('user-connect', socket.id);
 
   socket.on('audio-update', function (volume) {
-    socket.broadcast.emit('audio-new-value', volume);
+    io.emit('audio-new-value', volume);
   });
 
   socket.on('stopped', function() {
