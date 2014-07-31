@@ -2,18 +2,17 @@ var socket = io();
 var btn = document.getElementById('pushme');
 var quantity = 100,
     fps = 24;
-//  nowDrinking is a flag for checking if function is running
+//  nowDrinking is a flag for checking if the drinking function is running
 var nowDrinking = true,
     drinkTimer;
 
 btn.addEventListener('click', function () {
-  //  Send message that button has been pushed
+//  Send message that button has been pushed
   socket.emit('btn-push');
 });
 
 function drinking () {
-  //  This is the function that controls draining the bottle; at the moment it just runs down automatically from 100%, need to change this to respond to input from socket.
-  console.log('drinking');
+//  This is the function that controls draining the bottle; at the moment it just runs down automatically from 100%, need to change this to respond to input from socket.
   var liquid = document.getElementById('liquid'),
       gulp;
   nowDrinking = true;
@@ -34,7 +33,7 @@ function drinking () {
 }
 
 socket.on('btn-pushed', function () {
-  //  Reset liquid quantity and run the draining when the button has been pushed
+//  Reset liquid quantity and run the draining when the button has been pushed
   if (nowDrinking) {
       window.clearTimeout(drinkTimer);
       nowDrinking = false;
@@ -47,6 +46,5 @@ socket.on('btn-pushed', function () {
 });
 
 socket.on('btn-active', function () {
-  //  Make the button active again when the draining finishes
-  btn.removeAttribute('disabled');
+//  Do something(?) when the draining finishes
 });
