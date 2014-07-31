@@ -6,10 +6,59 @@ var quantity = 100,
 var nowDrinking = true,
     drinkTimer;
 
+var meter = null;
+
+//  nowDrinking is a flag for checking if function is running
+var nowDrinking = true,
+    drinkTimer;
+
 btn.addEventListener('click', function () {
 //  Send message that button has been pushed
   socket.emit('btn-push');
 });
+
+
+//run mobile functions
+if ( isMobile.any ){
+    webRTCCheck();
+    initAudio();
+}
+//desktop only
+else{
+}
+
+function initAudio(){
+  //grab the audio via RTC
+  if( navigator.getUserMedia ){
+    navigator.getUserMedia ({ audio: true, video: false }, getAudio, function(){} );
+  }
+}
+function webRTCCheck(){
+    //Check if getUserMedia, requestAnimationFrame, and AudioContext are supported by browser
+    window.requestAnimFrame = ( function(){ return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame })();
+    navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+}
+function getAudio(stream){
+    //create object for accessing audio
+    var audioContext = new AudioContext();
+    var mediaStreamSource = audioContext.createMediaStreamSource(stream);
+    meter = createAudioMeter(audioContext);
+    mediaStreamSource.connect(meter);
+    audioInputUpdate();
+}
+function audioInputUpdate(){
+    //Loop for new audio input
+    var volume = Math.floor(meter.volume*1000);
+    var volumeAmount = document.getElementById('volume-amount');
+    volumeAmount.innerHTML = volume;
+    requestAnimFrame(audioInputUpdate);
+}
+
+function liquidUpdate(){
+  //Loop for updating liquid in bottle
+  requestAnimFrame(liquidUpdate);
+}
 
 function drinking () {
 //  This is the function that controls draining the bottle; at the moment it just runs down automatically from 100%, need to change this to respond to input from socket.
