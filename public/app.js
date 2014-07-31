@@ -1,7 +1,13 @@
 var socket = io();
-var btn = document.getElementById('pushme');
-var quantity = 100,
-    fps = 24;
+
+// Configurable variables
+var initialQuantity = 85,
+    fps = 24,
+    volUpRange = 150,
+    volDnRange = 50;
+
+var quantity = initialQuantity;
+
 //  nowDrinking is a flag for checking if the drinking function is running
 var nowDrinking = true,
     drinkTimer;
@@ -11,12 +17,6 @@ var meter = null;
 //  nowDrinking is a flag for checking if function is running
 var nowDrinking = true,
     drinkTimer;
-
-btn.addEventListener('click', function () {
-//  Send message that button has been pushed
-  socket.emit('btn-push');
-});
-
 
 //run mobile functions
 if ( isMobile.any ){
@@ -81,12 +81,12 @@ function drinking () {
 socket.on('audio-new-value', function (volume) {
   var volumeAmount = document.getElementById('volume-amount');
   volumeAmount.innerHTML = volume;
-  if (volume > 150 && nowDrinking === false) {
+  if (volume > volUpRange && nowDrinking === false) {
     if (quantity <= 0) {
-      quantity = 100;
+      quantity = initialQuantity;
     }
     drinking();
-  } else if (volume < 50 && nowDrinking) {
+  } else if (volume < volDnRange && nowDrinking) {
     window.clearTimeout(drinkTimer);
     nowDrinking = false;
   }

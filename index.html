@@ -16,34 +16,37 @@
   }
   @media (min-width: 480px) {
     body.on { background-color: #ff0; }
-    button { display: none; }
-    #volume-output{ display: none; }
     .drink {
+      height: 550px;
       width: 220px;
     }
-    #bottle {
+    #coke {
       height: 550px;
       margin: 0 auto;
       position: relative;
-      background: url(images/bottle_empty.png) no-repeat;
     }
-    #liquid {
-      background-color: brown;
+    #coke .drink {
       bottom: 0;
-      height: 100%;
       left: 0;
       position: absolute;
-      background: url(images/bottle_full.png) no-repeat;
+    }
+    #bottle {
+      background: url(images/bottle_empty.alt.png) no-repeat;
+    }
+    #liquid {
+      background-color: #651a1a;
+      /*background: url(images/bottle_full.png) no-repeat;*/
+      height: 85%;
       transition: height 200ms cubic-bezier(0,0,0.58,1.2);
     }
   }
   </style>
 </head>
 <body>
-  <div id="bottle" class="drink">
+  <div id="coke" class="drink">
     <div id="liquid" class="drink"></div>
+    <div id="bottle" class="drink"></div>
   </div>
-  <button id="pushme">Push me</button>
   <div id="volume-container">
     <h1>Volume: <span id="volume-amount"></span></h1>
   </div>
