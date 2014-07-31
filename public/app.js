@@ -33,12 +33,14 @@ function initAudio(){
     navigator.getUserMedia ({ audio: true, video: false }, getAudio, function(){} );
   }
 }
+
 function webRTCCheck(){
     //Check if getUserMedia, requestAnimationFrame, and AudioContext are supported by browser
     window.requestAnimFrame = ( function(){ return  window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame })();
     navigator.getUserMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
 }
+
 function getAudio(stream){
     //create object for accessing audio
     var audioContext = new AudioContext();
@@ -47,23 +49,12 @@ function getAudio(stream){
     mediaStreamSource.connect(meter);
     audioInputUpdate();
 }
+
 function audioInputUpdate(){
-    //Loop for new audio input
-    var volume = Math.floor(meter.volume*1000);
-    if (volume > 175) {
-      socket.emit('audio-update', volume);
-    }
-    requestAnimFrame(audioInputUpdate);
-}
-
-socket.on('audio-new-value', function (volume) {
-  var volumeAmount = document.getElementById('volume-amount');
-  volumeAmount.innerHTML = volume;
-});
-
-function liquidUpdate(){
-  //Loop for updating liquid in bottle
-  requestAnimFrame(liquidUpdate);
+//Loop for new audio input
+  var volume = Math.floor(meter.volume*1000);
+  socket.emit('audio-update', volume);
+  requestAnimFrame(audioInputUpdate);
 }
 
 function drinking () {
@@ -87,17 +78,19 @@ function drinking () {
   })()
 }
 
-socket.on('btn-pushed', function () {
-//  Reset liquid quantity and run the draining when the button has been pushed
-  if (nowDrinking) {
-      window.clearTimeout(drinkTimer);
-      nowDrinking = false;
-  } else {
+socket.on('audio-new-value', function (volume) {
+  var volumeAmount = document.getElementById('volume-amount');
+  volumeAmount.innerHTML = volume;
+  if (volume > 150 && nowDrinking === false) {
     if (quantity <= 0) {
       quantity = 100;
     }
     drinking();
+  } else if (volume < 50 && nowDrinking) {
+    window.clearTimeout(drinkTimer);
+    nowDrinking = false;
   }
+//  Reset liquid quantity and run the draining when the button has been pushed
 });
 
 socket.on('btn-active', function () {

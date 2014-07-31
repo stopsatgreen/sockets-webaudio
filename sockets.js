@@ -13,11 +13,6 @@ io.sockets.on('connection', function(socket){
 
   socket.broadcast.emit('user-connect', socket.id);
 
-  socket.on('btn-push', function() {
-    console.log('button pushed');
-    socket.broadcast.emit('btn-pushed');
-  });
-
   socket.on('audio-update', function (volume) {
     socket.broadcast.emit('audio-new-value', volume);
   });
