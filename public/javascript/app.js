@@ -3,7 +3,7 @@ var socket = io();
 // Configurable variables
 var initialQuantity = 85,
     fps = 24,
-    volUpRange = 150,
+    volUpRange = 250,
     volDnRange = 50;
 
 var quantity = initialQuantity;
@@ -22,9 +22,6 @@ var nowDrinking = true,
 if ( isMobile.any ){
     webRTCCheck();
     initAudio();
-}
-//desktop only
-else{
 }
 
 function initAudio(){
