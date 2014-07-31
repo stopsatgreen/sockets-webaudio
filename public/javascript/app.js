@@ -1,10 +1,10 @@
 var socket = io();
 
 // Configurable variables
-var initialQuantity = 85,
-    fps = 24,
-    volUpRange = 250,
-    volDnRange = 50;
+var initialQuantity = 85, // % filled of the bottle
+    fps = 24,             // Smoothness of the draining animation
+    volUpRange = 250,     // Volume upper range
+    volDnRange = 50;      // Volume lower range
 
 var quantity = initialQuantity;
 
@@ -13,10 +13,6 @@ var nowDrinking = true,
     drinkTimer;
 
 var meter = null;
-
-//  nowDrinking is a flag for checking if function is running
-var nowDrinking = true,
-    drinkTimer;
 
 //run mobile functions
 if ( isMobile.any ){
@@ -55,7 +51,7 @@ function audioInputUpdate(){
 }
 
 function drinking () {
-//  This is the function that controls draining the bottle; at the moment it just runs down automatically from 100%, need to change this to respond to input from socket.
+//  This function controls draining the bottle.
   var liquid = document.getElementById('liquid'),
       gulp;
   nowDrinking = true;
@@ -78,12 +74,12 @@ function drinking () {
 socket.on('audio-new-value', function (volume) {
   var volumeAmount = document.getElementById('volume-amount');
   volumeAmount.innerHTML = volume;
-  if (volume > volUpRange && nowDrinking === false) {
+  if (volume >= volUpRange && nowDrinking === false) {
     if (quantity <= 0) {
       quantity = initialQuantity;
     }
     drinking();
-  } else if (volume < volDnRange && nowDrinking) {
+  } else if (volume <= volDnRange && nowDrinking) {
     window.clearTimeout(drinkTimer);
     nowDrinking = false;
   }
