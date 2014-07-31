@@ -5,9 +5,19 @@
   <title>Sockets &amp; Web Audio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    #volume-container{
+    position: relative;
+    margin: 50px auto 0 auto;
+    width: 190px;
+    padding: 20px;
+    z-index: 1;
+    background: rgba(205,205,205, 0.8);
+    border-radius: 5px;
+  }
   @media (min-width: 480px) {
     body.on { background-color: #ff0; }
     button { display: none; }
+    #volume-output{ display: none; }
     .drink {
       width: 200px;
     }
@@ -33,7 +43,12 @@
     <div id="liquid" class="drink"></div>
   </div>
   <button id="pushme">Push me</button>
+  <div id="volume-container">
+    <h1>Volume: <span id="volume-amount"></span></h1>
+  </div>
 <script src="/socket.io/socket.io.js"></script>
+<script src="isMobile.min.js"></script>
+<script src="volume-meter.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
