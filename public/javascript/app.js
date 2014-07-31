@@ -86,6 +86,6 @@ socket.on('audio-new-value', function (volume) {
 //  Reset liquid quantity and run the draining when the button has been pushed
 });
 
-socket.on('btn-active', function () {
+socket.on('on-stop', function () {
 //  Do something(?) when the draining finishes
 });

@@ -18,7 +18,7 @@ io.sockets.on('connection', function(socket){
   });
 
   socket.on('stopped', function() {
-    socket.broadcast.emit('btn-active');
+    socket.broadcast.emit('on-stop');
   });
 
 });
