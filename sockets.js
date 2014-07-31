@@ -11,15 +11,13 @@ app.get('/', function(req, res){
 
 io.sockets.on('connection', function(socket){
 
-  socket.broadcast.emit('user-connect', socket.id);
-
   socket.on('audio-update', function (volume) {
     io.emit('audio-new-value', volume);
   });
 
-  socket.on('stopped', function() {
-    socket.broadcast.emit('on-stop');
-  });
+  // socket.on('stopped', function() {
+  //   socket.broadcast.emit('on-stop');
+  // });
 
 });
 

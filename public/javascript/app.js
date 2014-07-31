@@ -72,20 +72,22 @@ function drinking () {
 }
 
 socket.on('audio-new-value', function (volume) {
+//  Update volume display (can remove this for demo)
   var volumeAmount = document.getElementById('volume-amount');
   volumeAmount.innerHTML = volume;
+//  Reset quantity if at 0, then run drinking function
   if (volume >= volUpRange && nowDrinking === false) {
     if (quantity <= 0) {
       quantity = initialQuantity;
     }
     drinking();
+//  Stop drinking function
   } else if (volume <= volDnRange && nowDrinking) {
     window.clearTimeout(drinkTimer);
     nowDrinking = false;
   }
-//  Reset liquid quantity and run the draining when the button has been pushed
 });
 
-socket.on('on-stop', function () {
-//  Do something(?) when the draining finishes
-});
+// socket.on('on-stop', function () {
+// //  Do something(?) when the draining finishes
+// });
