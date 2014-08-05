@@ -6,22 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     #volume-container{
-    position: relative;
-    margin: 50px auto 0 auto;
-    width: 190px;
-    padding: 20px;
+    position: absolute;
     z-index: 1;
     background: rgba(205,205,205, 0.8);
     border-radius: 5px;
   }
+  body{
+    /*background-color: #000;*/
+  }
+
   @media (min-width: 480px) {
+      #volume-container{
+      left: 50px;
+      top: 50px;
+      width: 200px;
+      padding: 20px;
+    }    
     .drink {
-      height: 550px;
-      width: 220px;
+      height: 625px;
+      width: 213px;
     }
     #coke {
-      height: 550px;
-      margin: 0 auto;
+      height: 625px;
+      margin: -10px auto 0 auto;
       position: relative;
     }
     #coke .drink {
@@ -30,20 +37,43 @@
       position: absolute;
     }
     #bottle {
-      background: url(images/bottle_empty.alt.png) no-repeat;
+      background: url(images/bottle_empty.png) no-repeat;
+      z-index: 1;
     }
     #liquid {
-      background-color: #651a1a;
-      /*background: url(images/bottle_full.png) no-repeat;*/
-      height: 85%;
+      /*background-color: #651a1a;*/
+      background: url(images/bottle_full.png) no-repeat;
+      background-position: center -2px;
+      background-attachment: fixed;
+      overflow: hidden;
+      height: 100%;
       transition: height 200ms cubic-bezier(0,0,0.58,1.2);
+      z-index: 2;
+    }
+    #liquid img{
+      position: absolute;
+      left: 0;
+      top: 0;
     }
   }
+  @media (max-width: 480px) {  
+    body{
+      background: url(images/cinema_mobile.png) no-repeat;
+      background-size: cover;
+    }  
+    #volume-container{
+      right: 10px;
+      top: 10px;
+      width: 100px;
+      padding: 5px;
+      font-size: 8px
+    }
+  }  
   </style>
 </head>
 <body>
   <div id="coke" class="drink">
-    <div id="liquid" class="drink"></div>
+    <div id="liquid" class="drink"><!-- <img src="images/bottle_full.png"/> --></div>
     <div id="bottle" class="drink"></div>
   </div>
   <div id="volume-container">

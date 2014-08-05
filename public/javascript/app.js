@@ -1,10 +1,10 @@
 var socket = io();
 
 // Configurable variables
-var initialQuantity = 85, // % filled of the bottle
+var initialQuantity = 100, // % filled of the bottle
     fps = 24,             // Smoothness of the draining animation
-    volUpRange = 300,     // Volume upper range
-    volDnRange = 50;      // Volume lower range
+    volUpRange = 125,     // Volume upper range
+    volDnRange = 90;      // Volume lower range
 
 var quantity = initialQuantity;
 
@@ -62,12 +62,12 @@ function drinking () {
       } else {
         socket.emit('stopped');
       }
-      gulp = quantity % 15 === 0;
+      gulp = quantity % 5 === 0;
       if (gulp) {
         liquid.style.height = quantity + '%';
       }
       quantity--;
-    }, 1000 / fps);
+    }, 1500 / fps);
   })();
 }
 
@@ -78,7 +78,7 @@ socket.on('audio-new-value', function (volume) {
 //  Reset quantity if at 0, then run drinking function
   if (volume >= volUpRange && nowDrinking === false) {
     if (quantity <= 0) {
-      quantity = initialQuantity;
+      /*quantity = initialQuantity;*/
     }
     drinking();
 //  Stop drinking function

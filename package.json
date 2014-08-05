@@ -4,6 +4,7 @@
   "description": "Coke drinkable ads demo",
   "dependencies": {
     "express": "^4.7.2",
-    "socket.io": "^1.0.6"
+    "socket.io": "^1.0.6",
+    "indexof":"0.0.1"
   }
 }
